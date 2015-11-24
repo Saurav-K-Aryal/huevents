@@ -1,0 +1,14 @@
+<ion-view style="" title="All Events">
+    <ion-content class="has-header" padding="'true'">
+    	<ion-list>
+    		<ion-item ng-repeat='event in events track by event.objectId' ng-href="#/eventDetails/{{event.objectId}}">
+    		{{event.name}}
+    		<br>
+    		{{event.venue}}
+    		{{event.date.substring(0,10)}}
+    		{{event.time}}
+    		<br>
+    		</ion-item>
+    	</ion-list>	
+    </ion-content>
+</ion-view>

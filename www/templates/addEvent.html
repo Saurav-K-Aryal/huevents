@@ -1,0 +1,54 @@
+<ion-view style="" title="Add Event">
+    <ion-content class="has-header" padding="'true'">
+    <label class="item item-input">
+  		<span class="input-label">Event Name</span>
+  		<input type="text" ng-model='eventName'>
+	</label>
+	<label class="item item-input">
+  		<span class="input-label">Event Description</span>
+  		<input type="text" ng-model='eventDescription'>
+	</label>
+		<label class="item item-input">
+  		<span class="input-label">Venue</span>
+  		<input type="text" ng-model='eventVenue'>
+	</label>
+	<label class="item item-input">
+  		<span class="input-label">Date</span>
+  		<input type="date" ng-model='eventDate'>
+	</label>
+	</label>
+		<label class="item item-input">
+  		<span class="input-label">Time</span>
+  		<input type="text" ng-model='eventTime'>
+	</label>
+	<label class="item item-input item-select">
+    <div class="input-label">
+      Category
+    </div>
+    <select ng-model="eventCategory">
+      <option>Case-Studies</option>
+      <option>Food</option>
+      <option>Socials-Parties</option>
+      <option>Arts-Music</option>
+      <option selected>Information-Sessions</option>
+      <option>Miscellaneous</option>
+      <option>Panels</option>
+      <option>Pageants</option>
+      <option>Sports</option>
+      <option>Health</option>
+    </select>
+  	</label>
+	</label>
+		<label class="item item-input">
+  		<span class="input-label">Fliers/Posters</span>
+  		<input type="file" ng-model='eventImage'>
+	</label>
+	{{eventName}}
+	{{eventDescription}}
+	{{eventVenue}}
+	{{eventDate}}
+	{{eventTime}}
+	{{eventCategory}}
+	<button class="button button-stable button-block  icon ion-compose" ng-click="postEvent(eventName, eventDescription, eventVenue, eventDate, eventTime, eventImage, eventCategory)">Post event</button>
+    </ion-content>
+</ion-view>

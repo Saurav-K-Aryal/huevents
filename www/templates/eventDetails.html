@@ -1,0 +1,24 @@
+<ion-view style="" title="Event Details">
+    <ion-content class="has-header" padding="'true'">
+        <a style="" class="button button-stable button-block button-small icon-left ion-android-arrow-back" href="#/tabs/allevents" menu-close="">back</a>
+        <pre class="padding">
+        <strong>{{eventbyId.name}}</strong>
+            <br>
+    		{{eventbyId.venue}}
+    		{{eventbyId.date.substring(0,10)}}
+    		{{eventbyId.time}}
+    		<br>
+    		category:{{eventbyId.category}}
+    		
+    		{{eventbyId.description}}
+    		<br>
+    		<!--- need to include chat handling logic -->
+    		<strong>Comments...</strong>
+    		<input type="text" placeholder="Write a comment...">
+    		<button style="" class="button button-small">Submit</button>
+    		Will have comments later, Parse already set up for this...
+
+        </pre>
+        <button style="" class="button button-stable button-block button-small" ng-click="doRsvp()">RSVP</button>
+    </ion-content>
+</ion-view>
