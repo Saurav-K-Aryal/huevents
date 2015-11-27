@@ -24,6 +24,11 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.qweasd219235"
+        },
+        "com.phonegap.plugins.facebookconnect": {
+            "APP_ID": "764722696967039",
+            "APP_NAME": "eventapp",
+            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
         }
     },
     "dependent_plugins": {}

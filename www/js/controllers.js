@@ -1,18 +1,25 @@
 angular.module('app.controllers', [])
   
-.controller('hUEventsCtrl', function($scope) {
-
+.controller('hUEventsCtrl', function($scope, $state, FacebookAuth) {
+    $scope.login = function () {
+      FacebookAuth.login().then(function(success) {
+	    	console.log(success);
+	    	$state.go("tabsController.allEvents");
+	    }, function (error) {
+	      console.log("login error\n", error);
+	    });
+	}
 })
    
-.controller('allEventsCtrl', function($scope, EventsService) {
-	EventsService.getAllEvents().then(function(response) {
+.controller('allEventsCtrl', function($scope, ParseService) {
+	ParseService.getAllEvents().then(function(response) {
 		console.log('getAllEvents', response.data.results)
 		// sending out the latest event post at the top.
 		$scope.events = response.data.results.reverse();
 	})
 })
    
-.controller('addEventCtrl', function($scope, $state, $ionicPopup, EventsService) {
+.controller('addEventCtrl', function($scope, $state, $ionicPopup, ParseService) {
 	var name = $scope.eventName;
 	var description= $scope.eventDescription;
 	var venue = $scope.eventVenue;
@@ -36,7 +43,7 @@ angular.module('app.controllers', [])
 				replies: [],
 				rsvps: [],
 			};
-			EventsService.addEvent(event).then(function (response) {
+			ParseService.addEvent(event).then(function (response) {
                 console.log('addStuff', response);
                 var alertPopup = $ionicPopup.alert({
      			title: 'Event Added!',
@@ -72,15 +79,15 @@ angular.module('app.controllers', [])
 
 })
    
-.controller('searchResultsCtrl', function($scope, $state, EventsService) {
-	EventsService.getEventsbyCategory($state.params.category).then(function(response) {
+.controller('searchResultsCtrl', function($scope, $state, ParseService) {
+	ParseService.getEventsbyCategory($state.params.category).then(function(response) {
 		console.log('getEventsbyCategory', response.data.results);
 		// sending out the latest event post at the top.
 		$scope.events = response.data.results;
 	})
 })
    
-.controller('eventDetailsCtrl', function($scope, $state, EventsService, $ionicPopup) {
+.controller('eventDetailsCtrl', function($scope, $state, ParseService, $ionicPopup) {
 	// doRsvp() currently only goes through popup logic will involve sending user data to organziers later.
 	$scope.doRsvp = function()
 	{	
@@ -103,7 +110,7 @@ angular.module('app.controllers', [])
    });
 }
 
-	 EventsService.getEventbyID($state.params.objectID).then(function (_data) {
+	 ParseService.getEventbyID($state.params.objectID).then(function (_data) {
             console.log(_data); //debug
             $scope.eventbyId = _data;
         }, function (_error) {
