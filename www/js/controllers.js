@@ -36,9 +36,7 @@ angular.module('app.controllers', [])
                 });
             };
 
-            /**
-             * save image to parse
-             */
+           
             $scope.savePhotoToParse = function () {
 
                 if (!$scope.lastPhoto) {
