@@ -117,9 +117,12 @@ angular.module('app.controllers', [])
 	// doRsvp() currently only goes through popup logic will involve sending user data to organziers later.
 	var eventID = $state.params.objectID;
 	var eventDetails = null;
+	$scope.addComment = "";
 	ParseService.getEventbyID(eventID).then(function (_data) {
             $scope.eventbyId = _data;
             eventDetails = _data;
+            $scope.comments = _data.comments.reverse();
+			$scope.replies = _data.replies.reverse();
         }, function (_error) {
             console.log("Error", error);
         });
@@ -162,6 +165,40 @@ angular.module('app.controllers', [])
        $state.go('tabsController.allEvents');
 });
 
-}
+};
+	var comment = "";
+    $scope.updateComment = function(newComment)
+    {
+	$scope.addComment = newComment;
+	comment = newComment;
+   	console.log("comment value= ", comment);
+    }
+    
+	$scope.postComment = function() {
+		var confirmPopup = $ionicPopup.confirm({
+     		title: 'Commenting..',
+     		template: 'Are you sure you Comment?'
+   		});
+   		console.log("comment value= ", comment);
+   		confirmPopup.then(function(res) {
+     		if(res) {
+     			console.log("comment value= ", $scope.addComment);
+				eventDetails.comments.push(comment);
+				$scope.comments = eventDetails.comments.reverse();
+				$scope.replies = eventDetails.replies.reverse();
+				console.log("comments added\n",eventDetails);
+     			return ParseService.updateEvent(eventDetails).then(function(success) {
+    				console.log("updated events comments");
+    				});
+     			var alertPopup = $ionicPopup.alert({
+     			title: 'Sent!',
+     			template: 'Thanking you reaching out!'
+   				});
+		    	alertPopup.then(function(res) {
+		   		});
+
+			}
+		});
+   	}
 });
  

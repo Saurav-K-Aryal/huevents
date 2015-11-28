@@ -14,9 +14,17 @@
     		<br>
     		<!--- need to include chat handling logic -->
     		<strong>Comments...</strong>
-    		<input type="text" placeholder="Write a comment...">
-    		<button style="" class="button button-small">Submit</button>
-    		Will have comments later, Parse already set up for this...
+    		<input type="text" placeholder="Write a comment..." ng-model="addComment" ng-change="updateComment(addComment)">
+    		<button style="" class="button button-small" ng-click="postComment()">Submit</button>
+    		<ion-list ng-repeat='comment in comments track by $index'>
+            <ion-item>
+            <strong>user says.. </strong>
+            {{comment}}
+            <br>
+            <strong>organizer replies.. </strong>
+            {{replies[$index]}}
+            </ion-item>
+        </ion-list>
 
         </pre>
         <button style="" class="button button-stable button-block button-small" ng-click="doRsvp()">RSVP</button>
