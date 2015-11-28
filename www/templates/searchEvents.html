@@ -1,11 +1,23 @@
 <ion-view style="" title="Search Events">
     <ion-content class="has-header" padding="'true'">
-        <form style="" class="list">
-            <label style="" name="SearchBar" class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input placeholder="Search..." type="search">
-            </label>
-        </form>
+        <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Search for Music" ng-model="searchQuery">
+    </label>
+    <i class="icon ion-ios-search placeholder-icon" style="font-size:40px;" ng-click="getQuery(searchQuery)"></i>
+  </div>
+  <div>
+    <ion-list>
+            <ion-item ng-repeat='event in result track by event.objectId' ng-href="#/eventDetails/{{event.objectId}}">
+            {{event.name}}
+            <br>
+            {{event.venue}}
+            {{event.date.substring(0,10)}}
+            {{event.time}}
+            <br>
+            </ion-item>
+    </ion-list> 
+ </div>
         <ion-list style="">
             or search by category...
             <ion-item style="" ng-href="#/searchResults/Information-Sessions" menu-close="">Information Sessions</ion-item>

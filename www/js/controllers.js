@@ -84,9 +84,27 @@ angular.module('app.controllers', [])
    
 
 
-.controller('searchEventsCtrl', function($scope, FacebookAuth) {
-
-
+.controller('searchEventsCtrl', function($scope, ParseService) {
+	var searchResult = [];
+	$scope.getQuery = function(searchQuery) {
+		if (searchQuery != '')
+		{
+		ParseService.getAllEvents().then(function(success)
+		{
+			var allEvents = success.data.results.reverse()
+			for (var i = 0; i < allEvents.length; i++)
+			{
+				var eventName = allEvents[i].name;
+				var found = eventName.search(searchQuery)
+				if (found != -1)
+				{
+					searchResult.push(allEvents[i])
+				}
+			}
+			$scope.result = searchResult;
+		});
+		}
+	}
 })
       
 
@@ -173,7 +191,7 @@ angular.module('app.controllers', [])
 	comment = newComment;
    	console.log("comment value= ", comment);
     }
-    
+
 	$scope.postComment = function() {
 		var confirmPopup = $ionicPopup.confirm({
      		title: 'Commenting..',
