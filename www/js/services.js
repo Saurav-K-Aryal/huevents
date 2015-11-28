@@ -24,7 +24,7 @@ angular.module('app.services', [])
                         console.log('addObject ', success);
                         return success.data;
                     }, function(error) {
-                    	console.log('error in addEvent', error);
+                    	console.log('  error in addEvent', error);
                     });
     	},
     	getAllEvents: function() {

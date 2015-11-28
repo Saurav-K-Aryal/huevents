@@ -24,7 +24,7 @@ angular.module('app.controllers', [])
 	 $scope.makeThumbNail = function () {
 
                 if (!$scope.lastPhoto) {
-                    alert("Missing Photo");
+                    alert(" Missing Photo");
                     return;
                 }
 
@@ -40,7 +40,7 @@ angular.module('app.controllers', [])
             $scope.savePhotoToParse = function () {
 
                 if (!$scope.lastPhoto) {
-                    alert("Missing Photo ");
+                    alert(" Missing Photo ");
                     return;
                 }
 

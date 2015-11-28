@@ -46,7 +46,7 @@ angular.module('app.factory', [])
                     console.log(' success, img re-size: ' + JSON.stringify(success_resp));
                     q.resolve(success_resp);
                 }, function (fail_resp) {
-                    console.log('fail, img re-size: ' + JSON.stringify(fail_resp));
+                    console.log(' fail, img re-size: ' + JSON.stringify(fail_resp));
                     q.reject(fail_resp);
                 }, img_path, 200, 0, {
                     imageDataType: ImageResizer.IMAGE_DATA_TYPE_URL,
@@ -63,7 +63,7 @@ angular.module('app.factory', [])
             toBase64Image: function (img_path) {
                 var q = $q.defer();
                 window.imageResizer.resizeImage(function (success_resp) {
-                    console.log('success, img toBase64Image: ' + JSON.stringify(success_resp));
+                    console.log(' success, img toBase64Image: ' + JSON.stringify(success_resp));
                     q.resolve(success_resp);
                 }, function (fail_resp) {
                     console.log('fail, img toBase64Image: ' + JSON.stringify(fail_resp));
