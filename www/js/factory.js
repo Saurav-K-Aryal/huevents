@@ -43,7 +43,7 @@ angular.module('app.factory', [])
             resizeImage: function (img_path) {
                 var q = $q.defer();
                 window.imageResizer.resizeImage(function (success_resp) {
-                    console.log('success, img re-size: ' + JSON.stringify(success_resp));
+                    console.log(' success, img re-size: ' + JSON.stringify(success_resp));
                     q.resolve(success_resp);
                 }, function (fail_resp) {
                     console.log('fail, img re-size: ' + JSON.stringify(fail_resp));

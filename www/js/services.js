@@ -21,7 +21,7 @@ angular.module('app.services', [])
                     .then(function (success) {
                         // In the response resp.data contains the result
                         // check the console to see all of the data returned
-                        console.log('addObject', success);
+                        console.log('addObject ', success);
                         return success.data;
                     }, function(error) {
                     	console.log('error in addEvent', error);

@@ -40,7 +40,7 @@ angular.module('app.controllers', [])
             $scope.savePhotoToParse = function () {
 
                 if (!$scope.lastPhoto) {
-                    alert("Missing Photo");
+                    alert("Missing Photo ");
                     return;
                 }
 
