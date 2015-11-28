@@ -1,3 +1,14 @@
 <ion-view style="" title="My Profile">
-    <ion-content class="has-header" padding="'true'"></ion-content>
+    <ion-content class="has-header" padding="'true'">
+    <div id="profile-bg"></div>
+      <div id="content">
+        <div id="profile-info">
+          <img id="profile-image" postion="center" top="0" height="150px" src={{userDetails.photo}}>
+          <h3 id="profile-name">{{userDetails.name}}</h3>
+        </div>
+    </div>
+    <div class="button-bar">
+	  <a class="button">RSVPs</a>
+	  <a class="button">My Events</a>
+</div></ion-content>
 </ion-view>

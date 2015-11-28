@@ -75,6 +75,24 @@ angular.module('app.services', [])
                     return _response;
                 });
         },
+        updateUser: function(newData) {
+            var params = newData;
+            console.log("newData\n", newData);
+            return $http.put(baseURL + "/User/" + newData.objectId, params, defaultSettings)
+                .then(function(_response) {
+                    console.log(_response);
+                    return _response;
+                });
+        },
+        updateEvent: function(newData) {
+            var params = newData;
+            console.log("newEventData\n", newData);
+            return $http.put(baseURL + "/Events/" + newData.objectId, params, defaultSettings)
+                .then(function(_response) {
+                    console.log(_response);
+                    return _response;
+                });
+        },
     }
 })
 
@@ -130,36 +148,8 @@ angular.module('app.services', [])
                     }); 
             });
         };
-
-        var currentUser = function() {
-            $cordovaFacebook.getLoginStatus().then(function(success) {
-            console.log("getLoginStatus", success);
-            var accessToken = success.authResponse.accessToken;
-            var userID = success.authResponse.userID;
-            var expiresIn = success.authResponse.expiresIn;
-
-            var expDate = new Date(
-                new Date().getTime() + expiresIn * 1000
-            ).toISOString();
-                
-                var fbValues = "&fields=id,name,picture,email";
-            var fbPermission = ["public_profile", "email"];
-
-            $cordovaFacebook.api("me?access_token=" + accessToken + fbValues, fbPermission)
-                .then(function (_fbUserInfo) {
-                    currentUser.objectId = _fbUserInfo.id;
-                })
-            })
-            return ParseService.getUser(currentUser.objectId).then(function(success) {
-                console.log("getUser", success);
-                return success;
-            });
-
-        };
-
     return {
         login: login,
-        currentUser: currentUser
     }
 });
 
