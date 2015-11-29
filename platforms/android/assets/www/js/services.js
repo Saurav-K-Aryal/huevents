@@ -93,6 +93,13 @@ angular.module('app.services', [])
                     return _response;
                 });
         },
+        deleteEvent: function(obj_id) {
+            return $http.delete(baseURL + "/Events/" + obj_id, defaultSettings)
+                .then(function(_data) {
+                    console.log("event deleting\n", _data);
+                    return _data;
+                });
+        },
     }
 })
 

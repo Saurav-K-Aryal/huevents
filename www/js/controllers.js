@@ -117,6 +117,8 @@ angular.module('app.controllers', [])
             eventDetails = _data;
             $scope.comments = _data.comments.reverse();
 			$scope.replies = _data.replies.reverse();
+			console.log("comments\n", $scope.comments);
+			console.log("replies\n", $scope.replies);
         }, function (_error) {
             console.log("Error", error);
         });
@@ -153,7 +155,7 @@ angular.module('app.controllers', [])
    	{
    		var confirmPopup = $ionicPopup.confirm({
      		title: 'Updating the Event..',
-     		template: 'All previous data will be repalced by hte new fields?'
+     		template: 'All previous data will be repalced by the new fields?'
    		});
    		confirmPopup.then(function(res) {
    			if(res){
@@ -173,6 +175,55 @@ angular.module('app.controllers', [])
    			}
    		});
    	}
+   	$scope.deleteEvent = function(obj_id)
+   	{
+   		var confirmPopup = $ionicPopup.confirm({
+   			title: 'Deleting Event',
+   			template: 'All history and detials of the event will be lost!'
+   		});
+   		confirmPopup.then(function(res) {
+   			if(res){
+   				return ParseService.getEventbyID(obj_id).then(function(success){
+   					var eventData = success;
+   					var userList = eventData.rsvps;
+   					for (i=0; i < userList.length; i++)
+   					{
+   						return ParseService.getUser(userList[i].fb_id).then(function(_data) {
+   							var userData = _data.data.results[0];
+   							var index = userData.rsvps.indexOf(obj_id);
+   							if (index !== -1)
+   							{
+   								userData.rsvps.splice(index, 1);
+   							}
+   							return ParseService.updateUser(userData).then(function(_response) {
+   								console.log('rsvps removed from user\n', _response);
+   								return ParseService.deleteEvent(obj_id).then(function(_data) {
+   								console.log("event removed\n", _data);
+   							$cordovaFacebook.getLoginStatus().then(function(success) {
+							console.log("getLoginStatus", success);
+							var userID = success.authResponse.userID;
+							return ParseService.getUser(userID).then(function(success) {
+    							console.log("gotUser", success);
+    							var userDetails = success.data.results[0];
+    							var index = userDetails.events.indexOf(obj_id);
+   								if (index !== -1)
+   								{
+   									userDetails.events.splice(index, 1);
+   								}
+   								return ParseService.updateUser(userDetails).then(function(_response) {
+   									console.log('events removed from user\n', _response);
+   									$state.go("tabsController.myProfile");
+   								})
+    						});
+   						});
+   							})
+   							})	
+   						})
+   					}
+   				})
+   			}
+   		});
+	}
 })
       
 
