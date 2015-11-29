@@ -106,18 +106,77 @@ angular.module('app.controllers', [])
 		}
 	}
 })
+
+.controller('eventEditsCtrl', function($scope, $state, ParseService, $ionicPopup, $cordovaFacebook) {
+	var eventID = $state.params.objectID;
+	var eventDetails = null;
+	$scope.addReply = "";
+	var reply = "";
+	ParseService.getEventbyID(eventID).then(function (_data) {
+            $scope.eventbyId = _data;
+            eventDetails = _data;
+            $scope.comments = _data.comments.reverse();
+			$scope.replies = _data.replies.reverse();
+        }, function (_error) {
+            console.log("Error", error);
+        });
+    $scope.updateReply = function(newReply)
+    {
+	$scope.addReply = newReply;
+	reply = newReply;
+    }
+	$scope.postReply = function() {
+		var confirmPopup = $ionicPopup.confirm({
+     		title: 'Replying..',
+     		template: 'Are you sure you reply?'
+   		});
+   		confirmPopup.then(function(res) {
+     		if(res) {
+     			console.log("reply value= ", $scope.addReply);
+				eventDetails.replies.push(reply);
+				$scope.comments = eventDetails.comments.reverse();
+				$scope.replies = eventDetails.replies.reverse();
+				console.log("replies added\n",eventDetails);
+     			return ParseService.updateEvent(eventDetails).then(function(success) {
+    				console.log("updated events replies");
+    				});
+     			var alertPopup = $ionicPopup.alert({
+     			title: 'Sent!',
+     			template: 'Thanking you replying!'
+   				});
+		    	alertPopup.then(function(res) {
+		   		});
+			}
+		});
+   	}
+})
       
 
 
-.controller('myProfileCtrl', function($scope, $cordovaFacebook, ParseService) {
+.controller('myProfileCtrl', function($scope, $cordovaFacebook, ParseService) {	
+	var rsvpList = [];
+	var rsvps = [];
+	var eventList = [];
+	var events = []
 	$cordovaFacebook.getLoginStatus().then(function(success) {
 		console.log("getLoginStatus", success);
+		var rsvpList = [];
 		var userID = success.authResponse.userID;
 		return ParseService.getUser(userID).then(function(success) {
     			console.log("gotUser", success);
     			$scope.userDetails = success.data.results[0];
-    		});
+    			rsvpList = success.data.results[0].rsvps;
+    	});
 	});
+	$scope.GetmyEvents = function(eventList) {
+			$scope.rsvps = [];
+			for (var i=0; i < eventList.length; i++) {
+				ParseService.getEventbyID(eventList[i]).then(function(success) {
+					events.push(success);
+				})
+			};
+			$scope.myevents = events;
+	}
 })
    
 
@@ -125,7 +184,7 @@ angular.module('app.controllers', [])
 .controller('searchResultsCtrl', function($scope, $state, ParseService) {
 	ParseService.getEventsbyCategory($state.params.category).then(function(response) {
 		// sending out the latest event post at the top.
-		$scope.events = response.data.results;
+		$scope.events = response.data.results.reverse();
 	})
 })
    
@@ -166,15 +225,16 @@ angular.module('app.controllers', [])
     			var userDetails = success.data.results[0];
     			console.log("rsvp-ing", userDetails);
     			userDetails.rsvps.push(eventID);
-    			console.log("user rspv'd\n", userDetails);
+    			console.log("user rsvp'd\n", userDetails);
     			eventDetails.rsvps.push(userDetails);
     			console.log("event updated\n", eventDetails);
     			return ParseService.updateEvent(eventDetails).then(function(success) {
     				console.log("updated events rsvps");
-    				});
-    			return ParseService.updateUser(userDetails).then(function(success) {
+    				return ParseService.updateUser(userDetails).then(function(success) {
     				console.log("updated user's RSVP");
-    		});
+    		})
+    				})
+    			
 	});
        
      });
@@ -189,7 +249,6 @@ angular.module('app.controllers', [])
     {
 	$scope.addComment = newComment;
 	comment = newComment;
-   	console.log("comment value= ", comment);
     }
 
 	$scope.postComment = function() {
@@ -197,7 +256,6 @@ angular.module('app.controllers', [])
      		title: 'Commenting..',
      		template: 'Are you sure you Comment?'
    		});
-   		console.log("comment value= ", comment);
    		confirmPopup.then(function(res) {
      		if(res) {
      			console.log("comment value= ", $scope.addComment);

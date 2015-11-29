@@ -8,7 +8,28 @@
         </div>
     </div>
     <div class="button-bar">
-	  <a class="button">RSVPs</a>
-	  <a class="button">My Events</a>
-</div></ion-content>
+	  <a class="button" ng-click="GetRsvps(userDetails.rsvps)">RSVPs</a>
+	  <a class="button" ng-click="GetmyEvents(userDetails.events)">My Events</a>
+	</div>
+	<ion-list>
+    		<ion-item ng-repeat='event in myevents track by event.objectId' ng-href="#/eventEdits/{{event.objectId}}">
+    		{{event.name}}
+    		<br>
+    		{{event.venue}}
+    		{{event.date.substring(0,10)}}
+    		{{event.time}}
+    		<br>
+    		</ion-item>
+    </ion-list>
+    <!-- <ion-list>
+    		<ion-item ng-repeat='event in rsvps track by event.objectId' ng-href="#/eventDetails/{{event.objectId}}">
+    		{{event.name}}
+    		<br>
+    		{{event.venue}}
+    		{{event.date.substring(0,10)}}
+    		{{event.time}}
+    		<br>
+    		</ion-item>
+    </ion-list> -->
+</ion-content>
 </ion-view>

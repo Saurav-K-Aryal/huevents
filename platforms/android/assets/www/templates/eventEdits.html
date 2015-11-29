@@ -1,0 +1,33 @@
+<ion-view style="" title="Edit Event">
+	<ion-content class="has-header" padding="true">
+		<a style="" class="button button-stable button-block button-small icon-left ion-android-arrow-back" href="#/tabs/profile" menu-close="">back</a>
+		Current Event Preview....
+		<br>
+		<strong>{{eventbyId.name}}</strong>
+            <br>
+    		Venue: {{eventbyId.venue}}
+    		<br>
+    		Date: {{eventbyId.date.substring(0,10)}}
+    		<br>
+    		Time: {{eventbyId.time}}
+    		<br>
+    		Category: {{eventbyId.category}}
+    		<br>
+    		Description: {{eventbyId.description}}
+    		<br>
+    		<!--- need to include chat handling logic -->
+    		<strong>Comments...</strong>
+    		<input type="text" placeholder="Write a reply..." ng-model="addReply" ng-change="updateReply(addReply)">
+    		<button style="" class="button button-small" ng-click="postReply()">Submit</button>
+    		<ion-list ng-repeat='comment in comments track by $index'>
+            <ion-item>
+            <strong>user says.. </strong>
+            {{comment}}
+            <ion-item
+            <strong>organizer replies.. </strong>
+            {{replies[$index]}}
+            </ion-item>
+            </ion-item>
+        </ion-list>    
+	</ion-content>
+</ion-view>
