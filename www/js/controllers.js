@@ -149,6 +149,30 @@ angular.module('app.controllers', [])
 			}
 		});
    	}
+   	$scope.editEvent = function(obj_id, name, description, venue, date, time, image, category)
+   	{
+   		var confirmPopup = $ionicPopup.confirm({
+     		title: 'Updating the Event..',
+     		template: 'All previous data will be repalced by hte new fields?'
+   		});
+   		confirmPopup.then(function(res) {
+   			if(res){
+   				return ParseService.getEventbyID(obj_id).then(function(success) {
+   					var eventData = success;
+   					eventData.name = name;
+   					eventData.description =description;
+   					eventData.venue = venue;
+   					eventData.date = date;
+   					eventData.time = time;
+   					eventData.image = image;
+   					eventData.category = category;
+   					return ParseService.updateEvent(eventData).then(function(_data) {
+   						console.log("event updated\n", eventData);
+   					});
+   				});
+   			}
+   		});
+   	}
 })
       
 
