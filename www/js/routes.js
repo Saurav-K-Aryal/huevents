@@ -106,6 +106,13 @@ angular.module('app.routes', [])
       templateUrl: 'templates/eventEdits.html',
       controller: 'eventEditsCtrl'
     })
+
+
+    .state('rsvpDetails', {
+      url: '/rsvpDetails/:objectID',
+      templateUrl: 'templates/rsvpDetails.html',
+      controller: 'rsvpDetailsCtrl'
+    })
     ;
 
   // if none of the above states are matched, use this as the fallback

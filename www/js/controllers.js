@@ -153,7 +153,8 @@ angular.module('app.controllers', [])
    	}
    	$scope.editEvent = function(obj_id, name, description, venue, date, time, image, category)
    	{
-   		var confirmPopup = $ionicPopup.confirm({
+   		if (name, description, venue, date, time, image, category) {
+      var confirmPopup = $ionicPopup.confirm({
      		title: 'Updating the Event..',
      		template: 'All previous data will be repalced by the new fields?'
    		});
@@ -174,7 +175,17 @@ angular.module('app.controllers', [])
    				});
    			}
    		});
-   	}
+   	} else
+    {
+      var alertPopup = $ionicPopup.alert({
+          title: 'Empty Fields!',
+          template: 'Please make sure all fields are filled.'
+        });
+        alertPopup.then(function(res) {
+       });     
+    }
+  }
+
    	$scope.deleteEvent = function(obj_id)
    	{
    		var confirmPopup = $ionicPopup.confirm({
@@ -232,7 +243,8 @@ angular.module('app.controllers', [])
 	var rsvpList = [];
 	var rsvps = [];
 	var eventList = [];
-	var events = []
+	var events = [];
+  var rsvp = [];
 	$cordovaFacebook.getLoginStatus().then(function(success) {
 		console.log("getLoginStatus", success);
 		var rsvpList = [];
@@ -240,7 +252,6 @@ angular.module('app.controllers', [])
 		return ParseService.getUser(userID).then(function(success) {
     			console.log("gotUser", success);
     			$scope.userDetails = success.data.results[0];
-    			rsvpList = success.data.results[0].rsvps;
     	});
 	});
 	$scope.GetmyEvents = function(eventList) {
@@ -251,7 +262,19 @@ angular.module('app.controllers', [])
 				})
 			};
 			$scope.myevents = events;
-	}
+      events = [];
+	};
+
+  $scope.GetRsvps = function(rsvpList) {
+    $scope.myevents = [];
+    for (var i = 0; i < rsvpList.length; i++) {
+      ParseService.getEventbyID(rsvpList[i]).then(function(_success) {
+        rsvp.push(_success);
+      })
+    };
+    $scope.rsvps = rsvp;
+    rsvp = [];
+  }
 })
    
 
@@ -351,5 +374,97 @@ angular.module('app.controllers', [])
 			}
 		});
    	}
-});
- 
+})
+
+.controller('rsvpDetailsCtrl', function($scope, $state, $cordovaFacebook, ParseService, $ionicPopup) {
+  var eventID = $state.params.objectID;
+  var eventDetails = null;
+  $scope.addComment = "";
+  ParseService.getEventbyID(eventID).then(function (_data) {
+            $scope.eventbyId = _data;
+            eventDetails = _data;
+            $scope.comments = _data.comments.reverse();
+            $scope.replies = _data.replies.reverse();
+        }, function (_error) {
+            console.log("Error", error);
+        });
+  var comment = "";
+    $scope.updateComment = function(newComment)
+    {
+  $scope.addComment = newComment;
+  comment = newComment;
+    }
+
+  $scope.postComment = function() {
+    var confirmPopup = $ionicPopup.confirm({
+        title: 'Commenting..',
+        template: 'Are you sure you Comment?'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          console.log("comment value= ", $scope.addComment);
+        eventDetails.comments.push(comment);
+        $scope.comments = eventDetails.comments.reverse();
+        $scope.replies = eventDetails.replies.reverse();
+        console.log("comments added\n",eventDetails);
+          return ParseService.updateEvent(eventDetails).then(function(success) {
+            console.log("updated events comments");
+            });
+          var alertPopup = $ionicPopup.alert({
+          title: 'Sent!',
+          template: 'Thanking you reaching out!'
+          });
+          alertPopup.then(function(res) {
+          });
+
+      }
+    });
+}
+    $scope.undoRsvp = function()
+  { 
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Unregistering..',
+        template: 'Are you sure you unregister to this event?'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          var alertPopup = $ionicPopup.alert({
+          title: 'Signed up!',
+          template: 'Thanking you for successfully Rsvp-ing to this event.'
+        });
+          alertPopup.then(function(res) {
+       });
+    $cordovaFacebook.getLoginStatus().then(function(success) {
+      console.log("getLoginStatus", success);
+      var userID = success.authResponse.userID;
+      return ParseService.getUser(userID).then(function(success) {
+          console.log("gotUser", success);
+          var userDetails = success.data.results[0];
+          var index = userDetails.rsvps.indexOf(eventID);
+          if (index != -1)
+          {
+            userDetails.rsvps.splice(index, 1);
+          }
+          console.log("unrsvp-ing user\n", userDetails);
+          for (var i = 0; i < eventDetails.rsvps.length; i++){
+            if (eventDetails.rsvps[i].fb_id == userDetails.fb_id)
+            {
+              console.log('remove');
+              eventDetails.rsvps.splice(i, 1);
+              break;
+            }
+          }
+          console.log("event updated\n", eventDetails);
+          return ParseService.updateEvent(eventDetails).then(function(success) {
+            console.log("updated events rsvps");
+            return ParseService.updateUser(userDetails).then(function(success) {
+            console.log("updated user's RSVP");
+        })
+            })
+          
+  })
+  })
+}
+})
+}
+ });
