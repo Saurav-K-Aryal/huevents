@@ -1,0 +1,35 @@
+<ion-view style="" title="Search Events">
+    <ion-content class="has-header" padding="'true'">
+        <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Search for Music" ng-model="searchQuery">
+    </label>
+    <i class="icon ion-ios-search placeholder-icon" style="font-size:40px;" ng-click="getQuery(searchQuery)"></i>
+  </div>
+  <div>
+    <ion-list>
+            <ion-item ng-repeat='event in result track by event.objectId' ng-href="#/eventDetails/{{event.objectId}}">
+            {{event.name}}
+            <br>
+            {{event.venue}}
+            {{event.date.substring(0,10)}}
+            {{event.time}}
+            <br>
+            </ion-item>
+    </ion-list> 
+ </div>
+        <ion-list style="">
+            or search by category...
+            <ion-item style="" ng-href="#/searchResults/Information-Sessions" menu-close="">Information Sessions</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Case-Studies" menu-close="">Case Studies</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Food" menu-close="">Food</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Parties-Socials" menu-close="">Parties-Socials</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Arts-Music" menu-close="">Arts-Music</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Miscellaneous" menu-close="">Miscellaneous</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Panels" menu-close="">Panels</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Pageants" menu-close="">Pagents</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Sports" menu-close="">Sports</ion-item>
+            <ion-item style="" ng-href="#/searchResults/Health" menu-close="">Health</ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

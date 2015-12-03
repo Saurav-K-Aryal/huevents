@@ -21,7 +21,160 @@ angular.module('app.controllers', [])
    
 
 
-.controller('addEventCtrl', function($scope, $state, $cordovaFacebook, $ionicPopup, ParseService) {
+.controller('addEventCtrl', function($scope, $state, Camera, $cordovaFacebook, $ionicPopup, ParseService) {
+
+
+
+
+
+     $scope.makeThumbNail = function () {
+      console.log("making thumbnail")
+
+                if (!$scope.lastPhoto) {
+                    alert("Event added without photo");
+                    return;
+                }
+
+                Camera.resizeImage($scope.lastPhoto).then(function (_result) {
+                    $scope.thumb = "data:image/jpeg;base64," + _result.imageData;
+                    $scope.savePhotoToParse();
+                }, function (_error) {
+                    console.log(_error);
+                });
+            };
+
+            /**
+             * save image to parse
+             */
+            $scope.savePhotoToParse = function () {
+              console.log("savingpic to parse");
+
+                if (!$scope.lastPhoto) {
+                    alert("Missing Photo");
+                    return;
+                }
+
+
+                Camera.toBase64Image($scope.lastPhoto).then(function (_result) {
+                    var base64 = _result.imageData;
+
+                    // make sure we are logged in
+                    // ParseService.loginDefaultUser("admin", "password").then(function (_user) {
+                    //     // user is logged in, now save to parse
+                    //     return 
+                        ParseService.savePhotoToParse({
+                            photo: base64,
+                            caption: "By User "
+                        })
+
+                    .then(function (_savePhotoResult) {
+                        console.log("savePhotoToParse ", _savePhotoResult);
+
+                    }, function (_error) {
+                        console.log(_error);
+                        alert("savePhotoToParse " + JSON.stringify(_error, null, 2));
+                    });
+                });
+            };
+
+            /**
+             * display alert to choose where to get the image from
+             */
+            $scope.getPhoto = function () {
+                var options = {
+                    'buttonLabels': ['Take Picture', 'Select From Gallery'],
+                    'addCancelButtonWithLabel': 'Cancel'
+                };
+                window.plugins.actionsheet.show(options, callback);
+            };
+
+            function callback(buttonIndex) {
+                console.log(buttonIndex);
+                if (buttonIndex === 1) {
+
+                    var picOptions = {
+                        destinationType: navigator.camera.DestinationType.FILE_URI,
+                        quality: 75,
+                        targetWidth: 500,
+                        targetHeight: 500,
+                        allowEdit: true,
+                        saveToPhotoAlbum: false
+                    };
+
+
+                    Camera.getPicture(picOptions).then(function (imageURI) {
+                        console.log(imageURI);
+                        $scope.lastPhoto = imageURI;
+                        $scope.newPhoto = true;
+
+                    }, function (err) {
+                        console.log(err);
+                        $scope.newPhoto = false;
+                        alert(err);
+                    });
+                } else if (buttonIndex === 2) {
+
+                    var picOptions = {
+                        destinationType: navigator.camera.DestinationType.FILE_URI,
+                        quality: 75,
+                        targetWidth: 500,
+                        targetHeight: 500,
+                        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+                    };
+
+
+                    Camera.getPictureFromGallery(picOptions).then(function (imageURI) {
+                        console.log(imageURI);
+                        $scope.lastPhoto = imageURI;
+                        $scope.newPhoto = true;
+
+                    }, function (err) {
+                        console.log(err);
+                        $scope.newPhoto = false;
+                        alert(err);
+                    });
+                }
+
+            };
+
+
+
+
+
+
+
+$scope.resize = function(imageURI){
+
+Camera.resizeImage(imageURI).then(function (_result) {
+                    $scope.thumb = "data:image/jpeg;base64," + _result.imageData;
+                    //$scope.savePhotoToParse();
+                }, function (_error) {
+                    console.log(_error);
+                });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	var name = $scope.eventName;
 	var description= $scope.eventDescription;
 	var venue = $scope.eventVenue;
@@ -32,8 +185,42 @@ angular.module('app.controllers', [])
 	var EventId = "";
 	$scope.postEvent = function(name, description, venue, date, time, image, category)
 	{
-		if (name && description && venue && date && time && category)
+		if (name && description && venue && date && time && category && $scope.lastPhoto)
 		{	
+      console.log("one");
+
+      Camera.resizeImage($scope.lastPhoto).then(function (_result) {
+                    $scope.thumb = "data:image/jpeg;base64," + _result.imageData;
+                    //$scope.savePhotoToParse();
+                }, function (_error) {
+                    console.log(_error);
+                });
+
+      console.log("two");
+
+      Camera.toBase64Image($scope.lastPhoto).then(function (_result) {
+                    console.log("result" + _result);
+                    $scope.base64 = _result.imageData;
+                    console.log("success yaha samma");
+                  });
+
+      console.log("three");
+
+       ParseService.savePhotoToParse({
+                            photo: base64,
+                            caption: "By User "
+                        });
+
+       console.log("four");
+
+
+
+
+
+
+
+
+
 			var event = {
 				name: name,
 				description: description,

@@ -1,0 +1,35 @@
+<ion-view style="" title="My Profile">
+    <ion-content class="has-header" padding="'true'">
+    <div id="profile-bg"></div>
+      <div id="content">
+        <div id="profile-info">
+          <img id="profile-image" postion="center" top="0" height="150px" src={{userDetails.photo}}>
+          <h3 id="profile-name">{{userDetails.name}}</h3>
+        </div>
+    </div>
+    <div class="button-bar">
+	  <a class="button" ng-click="GetRsvps(userDetails.rsvps)">RSVPs</a>
+	  <a class="button" ng-click="GetmyEvents(userDetails.events)">My Events</a>
+	</div>
+	<ion-list>
+    		<ion-item ng-repeat='event in myevents track by event.objectId' ng-href="#/eventEdits/{{event.objectId}}">
+    		{{event.name}}
+    		<br>
+    		{{event.venue}}
+    		{{event.date.substring(0,10)}}
+    		{{event.time}}
+    		<br>
+    		</ion-item>
+    </ion-list>
+    <ion-list>
+    		<ion-item ng-repeat='event in rsvps track by event.objectId' ng-href="#/rsvpDetails/{{event.objectId}}">
+    		{{event.name}}
+    		<br>
+    		{{event.venue}}
+    		{{event.date.substring(0,10)}}
+    		{{event.time}}
+    		<br>
+    		</ion-item>
+    </ion-list>
+</ion-content>
+</ion-view>

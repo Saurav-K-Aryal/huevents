@@ -1,0 +1,86 @@
+<ion-view style="" title="Edit Event">
+	<ion-content class="has-header" padding="true">
+		<a style="" class="button button-stable button-block button-small icon-left ion-android-arrow-back" href="#/tabs/profile" menu-close="">back</a>
+		Current Event Preview....
+		<br>
+		<strong>{{eventbyId.name}}</strong>
+            <br>
+    		Venue: {{eventbyId.venue}}
+    		<br>
+    		Date: {{eventbyId.date.substring(0,10)}}
+    		<br>
+    		Time: {{eventbyId.time}}
+    		<br>
+    		Category: {{eventbyId.category}}
+    		<br>
+    		Description: {{eventbyId.description}}
+    		<br>
+    		<!--- need to include chat handling logic -->
+    		<strong>Comments...</strong>
+    		<input type="text" placeholder="Write a reply..." ng-model="addReply" ng-change="updateReply(addReply)">
+    		<button style="" class="button button-small" ng-click="postReply()">Submit</button>
+    		<ion-list ng-repeat='comment in comments track by $index'>
+                <ion-item>
+                <strong>user says.. </strong>
+                {{comment}}
+                <ion-item>
+                <strong>organizer replies.. </strong>
+                {{replies[$index]}}
+            </ion-item>
+            </ion-item>
+        </ion-list>
+    <strong>Change all fields of the event</strong>
+        <label class="item item-input">
+        <span class="input-label">Event Name</span>
+        <input type="text" value={{eventbyId.name}} ng-model='eventName'>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Event Description</span>
+        <input type="text" value={{eventbyId.description}} ng-model='eventDescription'>
+    </label>
+        <label class="item item-input">
+        <span class="input-label">Venue</span>
+        <input type="text" value={{eventbyId.venue}} ng-model='eventVenue'>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Date</span>
+        <input type="date" value={{eventbyId.date}} ng-model='eventDate'>
+    </label>
+    </label>
+        <label class="item item-input">
+        <span class="input-label">Time</span>
+        <input type="text" value={{eventbyId.time}} ng-model='eventTime'>
+    </label>
+    <label class="item item-input item-select">
+    <div class="input-label">
+      Category
+    </div>
+    <select value={{eventbyId.category}} ng-model="eventCategory">
+      <option>Case-Studies</option>
+      <option>Food</option>
+      <option>Socials-Parties</option>
+      <option>Arts-Music</option>
+      <option selected>Information-Sessions</option>
+      <option>Miscellaneous</option>
+      <option>Panels</option>
+      <option>Pageants</option>
+      <option>Sports</option>
+      <option>Health</option>
+    </select>
+    </label>
+    </label>
+        <label class="item item-input">
+        <span class="input-label">Fliers/Posters</span>
+        <input type="file" ng-model='eventImage'>
+    </label>
+    <button class="button button-stable button-block  icon ion-compose" ng-click="editEvent(eventbyId.objectId,eventName, eventDescription, eventVenue, eventDate, eventTime, eventImage, eventCategory)">Edit event</button>
+      <button class="button button-stable button-block  icon ion-trash-b" ng-click="deleteEvent(eventbyId.objectId)">Delete event</button>
+      <br>
+      <strong>RSVPs</strong>
+      <ion-list ng-repeat='user in eventbyId.rsvps'>
+      <ion-item>
+      {{user.name}}
+      </ion-item>
+      </ion-list>      
+	</ion-content>
+</ion-view>
