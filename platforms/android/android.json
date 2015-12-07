@@ -77,6 +77,10 @@
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -86,7 +90,7 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
+                            "count": 3
                         }
                     ],
                     "application": [
@@ -151,6 +155,9 @@
             "PACKAGE_NAME": "com.ionicframework.qweasd219235"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
+        },
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.ionicframework.qweasd219235"
         }
     },
@@ -383,6 +390,13 @@
             "id": "cordova-plugin-camera.CameraPopoverHandle",
             "clobbers": [
                 "CameraPopoverHandle"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+            "id": "cordova-plugin-x-socialsharing.SocialSharing",
+            "clobbers": [
+                "window.plugins.socialsharing"
             ]
         }
     ]

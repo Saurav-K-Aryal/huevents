@@ -21,6 +21,13 @@
                   <p>{{eventbyId.time}}</p>
                  </a>
 
+            <div>
+            <button class = "share" ng-click = "shareAnywhere('Join our event', eventbyId.image )">Share </button> 
+            </div>
+            <div>
+            <button class = "sharefb" ng-click = "shareViaFacebook('Join our event', eventbyId.image)">ShareFb</button>
+            </div>
+
             </div>
 
     		<!--- need to include chat handling logic -->

@@ -81,6 +81,8 @@ angular.module('app.services', [])
 
 .service('ParseService', function($http){
 	var baseURL = "https://api.parse.com/1/classes";
+    var baseurl = "https://api.parse.com/1/";
+    var IMAGE = null;
 
 	var authHeaders = PARSE__HEADER_CREDENTIALS;
 
@@ -93,46 +95,25 @@ angular.module('app.services', [])
     return {
 
         savePhotoToParse: function (_params) {
+          var dataObject = {base64: _params.photo};
 
-    // for POST, we only need to set the authentication header
-    
-    // for POST, we need to specify data to add, AND convert it to
-    // a string before passing it in as separate parameter data
-    var dataObject = {base64: _params.photo};
-
-    // $http returns a promise, which has a then function
-    return $http.post(baseURL + 'pictures/mypic.jpeg', dataObject, defaultSettings)
-        .then(function (response) {
-            // In the response resp.data contains the result
-            // check the console to see all of the data returned
-            console.log('savePhotoToParse', response);
-
-            // now save to ImageObject Class
-            return $http.post(baseURL + 'events/Image', {
-                caption: _params.caption,
-                picture: {
+   
+            return $http.post(baseurl + 'files/mypic.jpg', dataObject, defaultSettings)
+                .then(function (response) {
+            
+                 console.log('savePhotoToParse', response);
+                  IMAGE = {
                     "name": response.data.name,
                     "__type": "File"
-                }
-            }, settings);
-        }).then(function (_imageInfoResp) {
-            console.log(_imageInfoResp);
-            return _imageInfoResp.data;
-        }, function (_error) {
-            console.log("Error: ", _error);
-        });
-},
+                };
+
+            });
+        },
 
 
-
-
-
-
-
-
-
-
-
+        getPicture: function(){
+            return IMAGE;
+        },
 
 
 

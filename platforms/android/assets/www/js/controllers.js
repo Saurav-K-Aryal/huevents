@@ -23,63 +23,6 @@ angular.module('app.controllers', [])
 
 .controller('addEventCtrl', function($scope, $state, Camera, $cordovaFacebook, $ionicPopup, ParseService) {
 
-
-
-
-
-     $scope.makeThumbNail = function () {
-      console.log("making thumbnail")
-
-                if (!$scope.lastPhoto) {
-                    alert("Event added without photo");
-                    return;
-                }
-
-                Camera.resizeImage($scope.lastPhoto).then(function (_result) {
-                    $scope.thumb = "data:image/jpeg;base64," + _result.imageData;
-                    $scope.savePhotoToParse();
-                }, function (_error) {
-                    console.log(_error);
-                });
-            };
-
-            /**
-             * save image to parse
-             */
-            $scope.savePhotoToParse = function () {
-              console.log("savingpic to parse");
-
-                if (!$scope.lastPhoto) {
-                    alert("Missing Photo");
-                    return;
-                }
-
-
-                Camera.toBase64Image($scope.lastPhoto).then(function (_result) {
-                    var base64 = _result.imageData;
-
-                    // make sure we are logged in
-                    // ParseService.loginDefaultUser("admin", "password").then(function (_user) {
-                    //     // user is logged in, now save to parse
-                    //     return 
-                        ParseService.savePhotoToParse({
-                            photo: base64,
-                            caption: "By User "
-                        })
-
-                    .then(function (_savePhotoResult) {
-                        console.log("savePhotoToParse ", _savePhotoResult);
-
-                    }, function (_error) {
-                        console.log(_error);
-                        alert("savePhotoToParse " + JSON.stringify(_error, null, 2));
-                    });
-                });
-            };
-
-            /**
-             * display alert to choose where to get the image from
-             */
             $scope.getPhoto = function () {
                 var options = {
                     'buttonLabels': ['Take Picture', 'Select From Gallery'],
@@ -139,42 +82,6 @@ angular.module('app.controllers', [])
 
 
 
-
-
-
-
-$scope.resize = function(imageURI){
-
-Camera.resizeImage(imageURI).then(function (_result) {
-                    $scope.thumb = "data:image/jpeg;base64," + _result.imageData;
-                    //$scope.savePhotoToParse();
-                }, function (_error) {
-                    console.log(_error);
-                });
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	var name = $scope.eventName;
 	var description= $scope.eventDescription;
 	var venue = $scope.eventVenue;
@@ -189,15 +96,16 @@ Camera.resizeImage(imageURI).then(function (_result) {
 		{	
       console.log("one");
 
+      //resizing image
       Camera.resizeImage($scope.lastPhoto).then(function (_result) {
                     $scope.thumb = "data:image/jpeg;base64," + _result.imageData;
-                    //$scope.savePhotoToParse();
                 }, function (_error) {
                     console.log(_error);
                 });
 
       console.log("two");
 
+      //changing image to base64 before uploading it to parse
       Camera.toBase64Image($scope.lastPhoto).then(function (_result) {
                     console.log("result" + _result);
                     $scope.base64 = _result.imageData;
@@ -206,18 +114,13 @@ Camera.resizeImage(imageURI).then(function (_result) {
 
       console.log("three");
 
+      // upload image to parse
        ParseService.savePhotoToParse({
-                            photo: base64,
+                            photo: $scope.base64,
                             caption: "By User "
-                        });
+                        }).then (function(){;
 
        console.log("four");
-
-
-
-
-
-
 
 
 
@@ -228,7 +131,7 @@ Camera.resizeImage(imageURI).then(function (_result) {
 				date: date,
 				time: time,
 				category: category,
-				image: null,
+				image: ParseService.getPicture(), //get image that we uploaded as a parse file
 				comments: [],
 				replies: [],
 				rsvps: [],
@@ -254,6 +157,9 @@ Camera.resizeImage(imageURI).then(function (_result) {
 		   		});
         	});
 			$state.go('tabsController.allEvents');
+
+
+     });
 		}
 		else
 		{

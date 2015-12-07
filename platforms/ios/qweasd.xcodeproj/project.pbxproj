@@ -65,6 +65,8 @@
 		14B3B83187054FF39A273E8C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 318C770892DB4C01A1BD6F2E /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A539193C09E44E72AD424AB2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 012BDB7EF3C149A78E1E348F /* CoreLocation.framework */; };
 		F2F261CAA1554CBB8050065D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD0337F39B145688ED49E55 /* AVFoundation.framework */; };
+		7290582B88BA4195816A8E3A /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A4E2C3C3FC4057B922A907 /* SocialSharing.m */; };
+		B191B2DA50734371AAE8FEA5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C27B89A0824D7EAB108D96 /* MessageUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +177,9 @@
 		318C770892DB4C01A1BD6F2E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		012BDB7EF3C149A78E1E348F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		BFD0337F39B145688ED49E55 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		40A4E2C3C3FC4057B922A907 /* SocialSharing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SocialSharing.m"; path = "cordova-plugin-x-socialsharing/SocialSharing.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		7521527402734FB798D2F432 /* SocialSharing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SocialSharing.h"; path = "cordova-plugin-x-socialsharing/SocialSharing.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		90C27B89A0824D7EAB108D96 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "MessageUI.framework"; path = "System/Library/Frameworks/MessageUI.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +199,7 @@
 				14B3B83187054FF39A273E8C /* ImageIO.framework in Frameworks */,
 				A539193C09E44E72AD424AB2 /* CoreLocation.framework in Frameworks */,
 				F2F261CAA1554CBB8050065D /* AVFoundation.framework in Frameworks */,
+				B191B2DA50734371AAE8FEA5 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +280,7 @@
 				318C770892DB4C01A1BD6F2E /* ImageIO.framework */,
 				012BDB7EF3C149A78E1E348F /* CoreLocation.framework */,
 				BFD0337F39B145688ED49E55 /* AVFoundation.framework */,
+				90C27B89A0824D7EAB108D96 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -326,6 +333,8 @@
 				0B39C78899B341D8B11A3B27 /* CDVCamera.h */,
 				7266C2A914324971B5B99C93 /* CDVJpegHeaderWriter.h */,
 				B20F1FB674AF4691A051DFF0 /* CDVExif.h */,
+				40A4E2C3C3FC4057B922A907 /* SocialSharing.m */,
+				7521527402734FB798D2F432 /* SocialSharing.h */,
 			);
 			name = Plugins;
 			path = "qweasd/Plugins";
@@ -528,6 +537,7 @@
 				79B3CC87F61746B5A59D19E0 /* UIImage+CropScaleOrientation.m in Sources */,
 				73BAAE5A90364767A3CC5ED1 /* CDVCamera.m in Sources */,
 				534EA9D1DC8C413BAF56FEEE /* CDVJpegHeaderWriter.m in Sources */,
+				7290582B88BA4195816A8E3A /* SocialSharing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

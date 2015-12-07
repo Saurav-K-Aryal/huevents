@@ -157,6 +157,9 @@
         },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.qweasd219235"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
         }
     },
     "dependent_plugins": {

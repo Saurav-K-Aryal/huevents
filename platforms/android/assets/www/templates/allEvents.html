@@ -2,12 +2,24 @@
     <ion-content class="has-header" padding="'true'">
     	<ion-list>
     		<ion-item ng-repeat='event in events track by event.objectId' ng-href="#/eventDetails/{{event.objectId}}">
-    		{{event.name}}
-    		<br>
-    		{{event.venue}}
-    		{{event.date.substring(0,10)}}
-    		{{event.time}}
-    		<br>
+
+
+
+            <div class="list">
+
+             <a class="item item-thumbnail-left" ng-href="#/eventDetails/{{event.objectId}}">
+                  <img src="{{event.image.url}}" width = 100>
+                  <h2>{{event.name}}</h2>
+                  <p>{{event.venue}}</p>
+                   <p>{{event.date.substring(0,10)}}</p>
+                  <p>{{event.time}}</p>
+            </a>
+
+   
+
+            </div>
+
+
     		</ion-item>
     	</ion-list>	
     </ion-content>

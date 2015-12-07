@@ -381,7 +381,23 @@ angular.module('app.controllers', [])
    
 
 
-.controller('eventDetailsCtrl', function($scope, $state, $cordovaFacebook, ParseService, $ionicPopup) {
+.controller('eventDetailsCtrl', function($scope, $state, $cordovaFacebook, $cordovaSocialSharing, ParseService, $ionicPopup) {
+
+
+
+    $scope.shareAnywhere = function(message, image) {
+        $cordovaSocialSharing.share(message, image);
+    }
+ 
+    $scope.shareViaFacebook = function(message, image) {
+        $cordovaSocialSharing.canShareVia("facebook", message, image).then(function(result) {
+             console.log("sharing on facebook");
+            $cordovaSocialSharing.shareViaFacebook(message, image, link);
+            console.log("done sharing on facebook");
+        }, function(error) {
+            alert("Cannot share on Facebook");
+        });
+    }
 	// doRsvp() currently only goes through popup logic will involve sending user data to organziers later.
 	var eventID = $state.params.objectID;
 	var eventDetails = null;

@@ -271,6 +271,14 @@ module.exports = [
         "clobbers": [
             "CameraPopoverHandle"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "pluginId": "cordova-plugin-x-socialsharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -286,7 +294,8 @@ module.exports.metadata =
     "cordova-plugin-file": "3.0.0",
     "com.raananw.imageResizerTT": "0.1.3",
     "cordova-plugin-actionsheet": "2.2.0",
-    "cordova-plugin-camera": "1.2.0"
+    "cordova-plugin-camera": "1.2.0",
+    "cordova-plugin-x-socialsharing": "5.0.7"
 }
 // BOTTOM OF METADATA
 });
