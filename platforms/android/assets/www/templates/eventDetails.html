@@ -2,34 +2,21 @@
     <ion-content class="has-header" padding="'true'">
         <a style="" class="button button-stable button-block button-small icon-left ion-android-arrow-back" href="#/tabs/allevents" menu-close="">back</a>
         <pre class="padding">
-
-            <h1 class="title">{{eventbyId.name}}</h1>
-        </div>
-            <div class="list card">
-
-                <div class="item item-avatar">
-                 <h2>{{eventbyId.name}}</h2>
-                  <p>{{eventbyId.venue}}</p>
-                 </div>
-
-              <div class="item item-image">
-                 <img src="{{eventbyId.image.url}}">
-               </div>
-
-             <a class="item item-icon-left assertive">
-                  <p>{{eventbyId.date | date}}</p>
-                  <p>{{eventbyId.time}}</p>
-                 </a>
-
-            </div>
-
-    		<!--- need to include chat handling logic -->
+        <strong>{{eventbyId.name}}</strong>
+            <br>
+    		{{eventbyId.venue}}
+    		{{eventbyId.date.substring(0,10)}}
+    		{{eventbyId.time}}
+    		<br>
+    		category:{{eventbyId.category}}
     		
-<!--- need to include chat handling logic -->
-            <strong>Comments...</strong>
-            <input type="text" placeholder="Write a comment..." ng-model="addComment" ng-change="updateComment(addComment)">
-            <button style="" class="button button-small" ng-click="postComment()">Submit</button>
-            <ion-list ng-repeat='comment in comments track by $index'>
+    		{{eventbyId.description}}
+    		<br>
+    		<!--- need to include chat handling logic -->
+    		<strong>Comments...</strong>
+    		<input type="text" placeholder="Write a comment..." ng-model="addComment" ng-change="updateComment(addComment)">
+    		<button style="" class="button button-small" ng-click="postComment()">Submit</button>
+    		<ion-list ng-repeat='comment in comments track by $index'>
             <ion-item>
             <strong>user says.. </strong>
             {{comment}}

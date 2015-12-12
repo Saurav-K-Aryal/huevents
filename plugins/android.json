@@ -108,23 +108,7 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.qweasd219235"
-        },
-        "com.raananw.imageResizerTT": {
-            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
-        },
-        "cordova-plugin-actionsheet": {
-            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
-        },
-        "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.qweasd219235"
-        }
-    }
+    "dependent_plugins": {}
 }
